@@ -50,7 +50,7 @@ model users {
   level_id Int
   login_credentials login_credentials @relation(fields: [login_credentials_id], references: [login_credentials_id])
   login_credentials_id String // foreign key of login_credentials
-  teams String //
+  teams String
 }
 
 model login_credentials {
@@ -249,4 +249,8 @@ model st_targeting_user {
   segment_targeting segment_targeting @relation(fields: [st_id], references: [st_id])
   st_id Int // Foreign Key of segment_targeting
   user String
+}
+
+model new_model {
+  id Int @id
 }
