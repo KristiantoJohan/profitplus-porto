@@ -49,13 +49,13 @@ model users {
   levels levels @relation(fields: [level_id], references: [level_id]) // foreign key of levels
   level_id Int
   login_credentials login_credentials @relation(fields: [login_credentials_id], references: [login_credentials_id])
-  login_credentials_id String // foreign key of login_credentials
+  login_credentials_id String @unique // foreign key of login_credentials
   teams String
 }
 
 model login_credentials {
   login_credentials_id String @id @default(uuid())
-  users users[]
+  users users?
   RefreshToken RefreshToken[]
   email String
   password String
