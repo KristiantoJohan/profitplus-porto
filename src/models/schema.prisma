@@ -50,7 +50,7 @@ model users {
   level_id Int
   login_credentials login_credentials @relation(fields: [login_credentials_id], references: [login_credentials_id])
   login_credentials_id String // foreign key of login_credentials
-  teams String
+  teams String //
 }
 
 model login_credentials {
