@@ -250,7 +250,3 @@ model st_targeting_user {
   st_id Int // Foreign Key of segment_targeting
   user String
 }
-
-model new_model {
-  id Int @id
-}
