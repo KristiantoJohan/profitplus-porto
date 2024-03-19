@@ -1,0 +1,25 @@
+name: CD
+on:
+  push:
+    branches: [ "test", "orm-database" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST}}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY}}
+          port: 22
+          script: |
+            cd ~/apps/testdeployment
+            git pull origin main
+            git status
+            npm install --omit=dev
+            cd src
+            prisma generate
+            pm2 restart main.js
