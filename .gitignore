@@ -1,4 +1,8 @@
 /node_modules
 .env
+<<<<<<< HEAD
 /server_data
 /src/models/migrations
+=======
+/server_data
+>>>>>>> d162f585154d260b64d9accd60e1ea09456819a2
