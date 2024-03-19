@@ -21,6 +21,6 @@ jobs:
             git status
             npm install --omit=dev
             cd src
-            
+            npx prisma init
             npx prisma migrate dev
             pm2 restart main.js
