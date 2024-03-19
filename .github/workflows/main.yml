@@ -1,7 +1,7 @@
 name: CD
 on:
   push:
-    branches: [ "test", "orm-database" ]
+    branches: [ "main" ]
 jobs:
   build:
     runs-on: ubuntu-latest
