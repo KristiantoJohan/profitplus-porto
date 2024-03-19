@@ -48,9 +48,28 @@ model users {
   unit_id Int // foreign key of units
   levels levels @relation(fields: [level_id], references: [level_id]) // foreign key of levels
   level_id Int
+  login_credentials login_credentials @relation(fields: [login_credentials_id], references: [login_credentials_id])
+  login_credentials_id String // foreign key of login_credentials
+  teams String
+}
+
+model login_credentials {
+  login_credentials_id String @id @default(uuid())
+  users users[]
+  RefreshToken RefreshToken[]
   email String
   password String
-  teams String 
+}
+
+model RefreshToken {
+  id String @id @unique @default(uuid())
+  hashedToken String
+  userId String
+  login_credentials login_credentials @relation(fields: [login_credentials_id], references: [login_credentials_id], onDelete: Cascade)
+  login_credentials_id String
+  revoked Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Add new entity named unit_leader
@@ -114,6 +133,7 @@ model stpdb {
   branding String //  Store the directory of product's branding image
   positioning_description String
   segment_targeting segment_targeting[] // 1 to many relation with segment_targeting
+  st_positioning st_positioning[] // 1 to many relation with st_positioning
 }
 
 model product_services {
@@ -204,4 +224,29 @@ model segment_targeting {
   product_id Int  // Foreign Key of product
   stpdb_id Int  // Foreign Key of stpdb
   desc String
+  st_futuregrowth st_futuregrowth[] // 1 to many relation with st_futuregrowth 
+  st_targeting_user st_targeting_user[] // 1 to many relation with st_futuregrowth 
+}
+
+model st_positioning {
+  st_pos Int @id @default(autoincrement())
+  stpdb stpdb @relation(fields: [stpdb_id], references: [stpdb_id])
+  stpdb_id Int  // Foreign Key of stpdb
+  logo String // Store the directory of logo's file 
+  x Int // Define the coordinate position of logo (x-axis) 
+  y Int // Define the coordinate position of logo (y-axis)
+}
+
+model st_futuregrowth {
+  stfg_id Int @id @default(autoincrement())
+  segment_targeting segment_targeting @relation(fields: [st_id], references: [st_id])
+  st_id Int // Foreign Key of segment_targeting
+  user String
+}
+
+model st_targeting_user {
+  sttu_id Int @id @default(autoincrement())
+  segment_targeting segment_targeting @relation(fields: [st_id], references: [st_id])
+  st_id Int // Foreign Key of segment_targeting
+  user String
 }
